@@ -1,0 +1,58 @@
+extends layout
+
+block content
+    -
+        if (status === 'blocked')
+            border = 'border-danger'
+        else if(status === 'completed')
+            border = 'border-primary'
+    article.container-fluid.col-8.mt-3.bg-body-secondary.d-flex.flex-column.align-items-center.border.border-2(class=border)
+        h3.text-center= questName
+        if map.length > 0
+            h5.text-center= `${trader} - ${map}`
+        else
+            h5.text-center= trader
+        div.container-fluid.d-flex.justify-content-evenly
+            -
+                if (previous === 'null') {
+                    previouslink = ``
+                }
+                else {
+                    previouslink = `/quests/${trader}/${previous}`
+                }
+            a.col-3.mt-3.nextpreviousbutton.d-flex.align-items-center.justify-content-center(href=previouslink) Previous quest
+            if status === 'in progress'
+                form.col-3(method="post")
+                    input(type='hidden', value='completed', name='completed')
+                    input.col-12.mt-3.completebutton(type='submit', value='Mark as completed')
+            else if status === 'blocked'
+                button.col-3.mt-3.blockedbutton Locked
+            else if status === 'completed'
+                form.col-3(method="post")
+                    input(type='hidden', value='uncompleted', name='completed')
+                    input.col-12.mt-3.completedbutton(type='submit', value='Mark as uncompleted')
+            -
+                if (next === 'null') {
+                    nextlink = ``
+                } else {
+                    nextlink = `/quests/${trader}/${next}`
+                }
+            a.col-3.mt-3.nextpreviousbutton.d-flex.align-items-center.justify-content-center(href=nextlink) Next quest
+        div.container-fluid.mt-3.mb-3.p-3
+            p= dialogue
+            div.container-fluids
+                h5.text-center Objectives:
+                ul
+                    each val in objectives
+                        li= val
+                if requirements.length > 0
+                    h5.text-center Requirements:
+                    ul
+                        each val in requirements
+                            li= val
+                h5.text-center Rewards:
+                ul
+                    each val in rewards
+                        li= val
+                if image
+                    img.w-100.h-auto(src=`/images/${image}.png`)

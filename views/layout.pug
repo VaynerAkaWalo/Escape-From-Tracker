@@ -1,0 +1,43 @@
+doctype html
+html(data-bs-theme="dark")
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+
+  body
+    block nav
+      nav.navbar.navbar-expand.bg-body-tertiary
+        div.container-fluid
+          a.navbar-brand.m-3(href='/') Escape From Tracker
+          .collapse.navbar-collapse(id='navbarContent')
+            ul.navbar-nav.me-auto.mb-2.mb-lg-0
+              li.nav-item
+                a.nav-link(href="/") Home
+              li.nav-item
+                a.nav-link(href="/quests") Quests
+              li.nav-item.dropdown
+                a.nav-link.dropdown-toggle(href="#", role='button', data-bs-toggle="dropdown") Traders
+                ul.dropdown-menu
+                  li
+                    a.dropdown-item(href="/quests/Prapor") Prapor
+                  li
+                    a.dropdown-item(href="/quests/Therapist") Therapist
+                  li
+                    a.dropdown-item(href="/quests/Fence") Fence
+                  li
+                    a.dropdown-item(href="/quests/Skier") Skier
+                  li
+                    a.dropdown-item(href="/quests/Peacekeeper") Peacekeeper
+                  li
+                    a.dropdown-item(href="/quests/Mechanic") Mechanic
+                  li
+                    a.dropdown-item(href="/quests/Ragman") Ragman
+                  li
+                    a.dropdown-item(href="/quests/Jeager") Jeager
+          div
+          if username
+            h5.text-center=`Logged as ${username}`
+            a.btn.btn-outline-light.m-3(href="/logout") Logout
+    block content
+    script(src='/javascripts/bootstrap.bundle.min.js')

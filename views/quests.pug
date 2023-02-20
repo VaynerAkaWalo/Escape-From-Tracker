@@ -1,0 +1,47 @@
+extends layout
+
+block content
+    article.container-fluid.col-8.mt-3.bg-body-secondary
+        h3.text-center Quests
+        div.d-flex.justify-content-center
+            div.form-check.form-check-inline
+                input.form-check-input(type='checkbox', id='showcompleted')
+                label.form-check-label(for='showcompleted') Show completed
+            div.form-check.form-check-inline
+                input.form-check-input(type='checkbox', id='showblocked')
+                label.form-check-label(for='showblocked') Show blocked
+        div.d-flex.p-3
+            h5.text-center.col-3 Title
+            h5.text-center.col-2 Trader
+            h5.text-center.col-2 Type
+            h5.text-center.col-2 Map
+            h5.text-center.col-2 Status
+        div.overflow-auto.pb-3
+            each quest in quests
+                -
+                    switch (quest.status) {
+                        case 'completed':
+                            bordercolor = 'border-primary'
+                            textcolor = 'text-primary'
+                            taskstatus = quest.status
+                            break;
+                        case 'blocked':
+                            bordercolor = 'border-danger'
+                            textcolor = 'text-danger'
+                            taskstatus = quest.status
+                            break;
+                        case 'in progress':
+                            bordercolor = 'border-dark'
+                            textcolor = 'text-light'
+                            taskstatus = 'in-progress'
+                            break;
+                    }
+                div(class=taskstatus)
+                    - let link =`/quests/${quest.trader}/${quest.questName}`
+                    a.container-fluid.w-100.d-flex.border.border-5.mt-2.align-items-center.text-decoration-none.quest(href=link, class=bordercolor, class=textcolor)
+                        h5.col-3.mb-0.text-center(class=textcolor)= quest.questName
+                        p.col-2.mb-0.text-center= quest.trader
+                        p.col-2.mb-0.text-center= quest.type
+                        p.col-2.mb-0.text-center= quest.map
+                        h5.col-2.mb-0.text-center(class=textcolor)= quest.status
+    script(src='/javascripts/quests.js').

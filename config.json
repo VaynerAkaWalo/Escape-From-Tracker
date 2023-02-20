@@ -1,0 +1,5 @@
+{
+  "sqlite": {
+    "path": "./db/database.db"
+  }
+}

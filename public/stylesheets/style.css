@@ -1,0 +1,64 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.article-main {
+  min-height: 94vh;
+}
+
+.quest {
+  min-height: 10vh;
+}
+
+.quest:hover {
+  border-color: white !important;
+}
+
+.completebutton {
+  font-size: large;;
+  height: 50px;
+  background: none;
+  border: black 1px solid;
+  color: white;
+}
+
+.blockedbutton {
+  font-size: large;;
+  height: 50px;
+  background: darkred;
+  border: black 1px solid;
+  color: white;
+}
+
+.completedbutton {
+  font-size: large;;
+  height: 50px;
+  background: dodgerblue;
+  border: black 1px solid;
+  color: white;
+}
+
+.nextpreviousbutton {
+  font-size: large;;
+  height: 50px;
+  background: none;
+  border: black 1px solid;
+  color: white;
+  text-decoration: none;
+}
+
+.completebutton:hover {
+  background: white;
+  color: black;
+}
+
+.completedbutton:hover {
+  background: white;
+  color: black;
+}
+
+.nextpreviousbutton:hover {
+  background: gray;
+  color: black;
+}
