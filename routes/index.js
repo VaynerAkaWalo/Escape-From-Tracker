@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var loginModule = require('../modules/login')
+const bcrypt = require('bcrypt')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -18,7 +19,7 @@ router.post('/login', (req, res) => {
     if(username != null && password != null) {
         loginModule.getUser(username, (err, result) => {
             if(result) {
-                if(result.username === username && result.password === password) {
+                if(result.username === username && bcrypt.compareSync(password, result.password)) {
                     req.session.loggedin = true
                     req.session.username = username
                     res.redirect('/quests')

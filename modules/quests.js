@@ -81,6 +81,39 @@ function getQuestsFromTrader(username ,trader, callback) {
     })
 }
 
+function getQuestsFromMap(username ,map, callback) {
+    getCompleted(username, (err, completed) => {
+        let sql = `select name, trader, map, type, next, previous from quests where map like ?`;
+        db.all(sql, [map], (err, row) => {
+            let result = []
+            if(err) {
+                console.log("Error: " + err)
+            }
+            row.forEach((row) => {
+                let status;
+                if(completed.includes(row.name)) {
+                    status = 'completed'
+                }
+                else if(completed.includes(row.previous) || row.previous === 'null') {
+                    status = 'in progress'
+                }
+                else {
+                    status = 'blocked'
+                }
+                result.push({
+                    questName: row.name,
+                    trader: row.trader,
+                    map: row.map,
+                    type: row.type,
+                    status
+                })
+            })
+            callback(null, result)
+
+        })
+    })
+}
+
 function getQuestInfo(username ,name, callback) {
     getCompleted(username, (err, completed) => {
         let sql = `select * from quests where name like ?`;
@@ -219,5 +252,6 @@ module.exports = {
     getQuest,
     getQuestsFromTrader,
     setCompleted,
-    setUnCompleted
+    setUnCompleted,
+    getQuestsFromMap
 }

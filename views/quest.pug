@@ -8,10 +8,11 @@ block content
             border = 'border-primary'
     article.container-fluid.col-8.mt-3.bg-body-secondary.d-flex.flex-column.align-items-center.border.border-2(class=border)
         h3.text-center= questName
-        if map.length > 0
-            h5.text-center= `${trader} - ${map}`
-        else
-            h5.text-center= trader
+        if map
+            if map.length > 0
+                h5.text-center= `${trader} - ${map}`
+            else
+                h5.text-center= trader
         div.container-fluid.d-flex.justify-content-evenly
             -
                 if (previous === 'null') {

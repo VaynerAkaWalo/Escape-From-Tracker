@@ -1,5 +1,6 @@
 const db = require('../modules/db')
-const {log} = require("debug");
+const bcrypt = require('bcrypt')
+
 
 function getUser(login ,callback) {
     let sql = `select login, password from users where login like ?`;
@@ -23,14 +24,18 @@ function getUser(login ,callback) {
 }
 
 function addUser(login, password, callback) {
-    let sql = `insert into users (login, password) values (?, ?)`
-    db.run(sql, [login, password], (err) => {
-        if (err) {
-            console.log(err)
-        }
-    })
+    bcrypt.genSalt(10,'b',(err, salt) => {
+        bcrypt.hash(password, salt, (err, hashedPassword) => {
+            let sql = `insert into users (login, password) values (?, ?)`
+            db.run(sql, [login, hashedPassword], (err) => {
+                if (err) {
+                    console.log(err)
+                }
+            })
 
-    callback(null)
+            callback(null)
+        })
+    })
 }
 
 function checkIfLoggedIn(req,res, callback) {

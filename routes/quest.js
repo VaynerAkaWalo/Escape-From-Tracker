@@ -16,14 +16,25 @@ router.get('/', function(req, res, next) {
     })
 });
 
-router.get('/:trader', function(req, res, next) {
+router.get('/:path', function(req, res, next) {
     checkIfLoggedIn(req, res, () => {
-        questModules.getQuestsFromTrader(req.session.username ,req.params.trader, (err, result) => {
-            res.render('quests', {
-                username: req.session.username,
-                quests: result
-            });
-        })
+        const maps = ['Factory', 'Customs', 'Woods', 'Shoreline', 'Interchange', 'Reserve', 'Lighthouse', 'Streets of Tarkov', 'The Lab']
+        if(maps.includes(req.params.path)) {
+            questModules.getQuestsFromMap(req.session.username, req.params.path, (err, result) => {
+                res.render('quests', {
+                    username: req.session.username,
+                    quests: result
+                });
+            })
+        }
+        else {
+            questModules.getQuestsFromTrader(req.session.username ,req.params.path, (err, result) => {
+                res.render('quests', {
+                    username: req.session.username,
+                    quests: result
+                });
+            })
+        }
     })
 });
 
